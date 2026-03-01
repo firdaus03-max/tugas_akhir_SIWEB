@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;      
+}
+
+.hero {
+    height: 400px;
+    background-image: url('../assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-card {
+    transition: 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: scale(1.05);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+footer {
+    margin-top: 50px;
+}

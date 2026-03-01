@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Showroom Motor Sport</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">MOTORSPORT SHOWROOM</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Inventory</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero text-center text-white d-flex align-items-center justify-content-center">
+        <div class="container">
+            <h1>Sistem Manajemen Showroom Motor Sport</h1>
+            <p>Kelola Data Motor Sport Premium Dengan Mudah dan Cepat.</p>
+        </div>
+    </div>
+
+    <!-- Dashboard Stats -->
+    <div class="container mt-5">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <h5>Total Motor</h5>
+                        <h2>24</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <h5>Tersedia</h5>
+                        <h2>18</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <h5>Merk</h5>
+                        <h2>6</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daftar Motor Sport -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Daftar Motor Sport</h2>
+        <div class="row">
+            <!-- Motor 1 -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="assets/YAMAHA_R6.jpg" class="card-img-top" alt="Yamaha R6"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Yamaha R6</h5>
+                        <p class="card-text">Harga: Rp 350.000.000</p>
+                        <p class="card-text">Tahun: 2023</p>
+                        <p class="card-text">CC: 600cc</p>
+                        <p class="card-text">Stok: 3 Unit</p>
+                        <button class="btn btn-primary">Lihat Detail</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motor 2 -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="assets/HONDA_CBR1000RR.jpg" class="card-img-top" alt="Honda CBR1000RR"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Honda CBR1000RR</h5>
+                        <p class="card-text">Harga: Rp 650.000.000</p>
+                        <p class="card-text">Tahun: 2024</p>
+                        <p class="card-text">CC: 1000cc</p>
+                        <p class="card-text">Stok: 2 Unit</p>
+                        <button class="btn btn-primary">Lihat Detail</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motor 3 -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="assets/KAWASAKI_NINJA_ZX10R.jpg" class="card-img-top" alt="Kawasaki Ninja ZX-10R"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Kawasaki Ninja ZX-10R</h5>
+                        <p class="card-text">Harga: Rp 580.000.000</p>
+                        <p class="card-text">Tahun: 2023</p>
+                        <p class="card-text">CC: 998cc</p>
+                        <p class="card-text">Stok: 4 Unit</p>
+                        <button class="btn btn-primary">Lihat Detail</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Tambah Motor -->
+    <div class="container mt-5 mb-5">
+        <div class="card p-4">
+            <h5 class="card-title mb-4">Tambah Data Motor Sport</h5>
+            <form>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nama Motor</label>
+                        <input type="text" class="form-control" placeholder="Contoh: Yamaha R6">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Merk</label>
+                        <select class="form-select">
+                            <option value="">Pilih Merk</option>
+                            <option value="Yamaha">Yamaha</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Kawasaki">Kawasaki</option>
+                            <option value="Suzuki">Suzuki</option>
+                            <option value="Ducati">Ducati</option>
+                            <option value="BMW">BMW</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Tahun</label>
+                        <input type="number" class="form-control" placeholder="2024" min="2015" max="2024">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">CC Motor</label>
+                        <select class="form-select">
+                            <option value="">Pilih CC</option>
+                            <option value="250">250cc</option>
+                            <option value="400">400cc</option>
+                            <option value="600">600cc</option>
+                            <option value="1000">1000cc</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Harga (Rp)</label>
+                        <input type="number" class="form-control" placeholder="Masukkan harga">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Stok Unit</label>
+                        <input type="number" class="form-control" placeholder="Jumlah unit">
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Spesifikasi</label>
+                        <textarea class="form-control" rows="3" placeholder="Masukkan spesifikasi motor..."></textarea>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-5">Tambah Motor</button>
+                    <button type="reset" class="btn btn-secondary px-5 ms-2">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        &copy; 2024 MOTORSPORT SHOWROOM. All rights reserved.
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
