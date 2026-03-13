@@ -1,0 +1,360 @@
+<?php
+session_start();
+
+// Cek status login dari session atau cookie
+$isLoggedIn = false;
+$username = '';
+
+if (isset($_SESSION["user"])) {
+    $isLoggedIn = true;
+    $username = $_SESSION["user"];
+} elseif (isset($_COOKIE['login_status']) && $_COOKIE['login_status'] === 'true' && isset($_COOKIE['username'])) {
+    // Auto login dari cookie
+    $_SESSION["user"] = $_COOKIE['username'];
+    $isLoggedIn = true;
+    $username = $_COOKIE['username'];
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Showroom Motor Sport</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <!-- Navbar dengan fitur Wishlist, Dark Mode, dan User Info -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-speedometer2"></i> MOTORSPORT SHOWROOM
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.php">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Inventory</a>
+                    </li>
+                </ul>
+                
+                <?php if ($isLoggedIn): ?>
+                    <!-- Tampilan jika sudah login -->
+                    <span class="text-white me-3">
+                        <i class="bi bi-person-circle"></i> Halo, <?php echo htmlspecialchars($username); ?>
+                    </span>
+                    <a href="controller/logout.php" class="btn btn-outline-danger btn-sm me-2">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                <?php else: ?>
+                    <!-- Tampilan jika belum login -->
+                    <a href="login.php" class="btn btn-outline-warning btn-sm me-2">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
+                <?php endif; ?>
+                
+                <button class="btn btn-outline-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#wishlistModal" onclick="tampilkanWishlist()">
+                    <i class="bi bi-heart-fill"></i> Wishlist (<span id="wishlist-count">0</span>)
+                </button>
+                <button id="btn-theme" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-moon-stars-fill"></i> Mode Gelap
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero text-center text-white d-flex align-items-center justify-content-center">
+        <div class="container">
+            <h1><i class="bi bi-bicycle"></i> Sistem Manajemen Showroom Motor Sport</h1>
+            <p>Kelola Data Motor Sport Premium Dengan Mudah dan Cepat.</p>
+        </div>
+    </div>
+
+    <!-- Dashboard Stats -->
+    <div class="container mt-5">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <i class="bi bi-bicycle display-4 text-primary"></i>
+                        <h5 class="mt-2">Total Motor</h5>
+                        <h2>24</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <i class="bi bi-check-circle display-4 text-success"></i>
+                        <h5 class="mt-2">Tersedia</h5>
+                        <h2>18</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <i class="bi bi-tags display-4 text-warning"></i>
+                        <h5 class="mt-2">Merk</h5>
+                        <h2>6</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daftar Motor Sport -->
+    <div class="container mt-5">
+        <h3 class="mb-4"><i class="bi bi-list-ul"></i> Daftar Motor Sport</h3>
+        <div class="row" id="container-barang">
+            <!-- Motor 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 motor-card">
+                    <img src="assets/YAMAHA_R6.jpg" class="card-img-top" alt="Yamaha R6"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Yamaha R6</h5>
+                        <p class="card-text harga-text">Harga: Rp 350.000.000</p>
+                        <p class="card-text stok-text">Stok: 3</p>
+                        <p class="card-text"><i class="bi bi-calendar"></i> Tahun: 2023 | <i class="bi bi-cpu"></i> 600cc</p>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-beli w-50 me-2">
+                                <i class="bi bi-cart-check"></i> Beli
+                            </button>
+                            <button class="btn btn-outline-danger btn-wishlist w-50" onclick="tambahKeWishlist('Yamaha R6', 'Rp 350.000.000')">
+                                <i class="bi bi-heart"></i> Wishlist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motor 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 motor-card">
+                    <img src="assets/HONDA_CBR1000RR.jpg" class="card-img-top" alt="Honda CBR1000RR"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Honda CBR1000RR</h5>
+                        <p class="card-text harga-text">Harga: Rp 650.000.000</p>
+                        <p class="card-text stok-text">Stok: 2</p>
+                        <p class="card-text"><i class="bi bi-calendar"></i> Tahun: 2024 | <i class="bi bi-cpu"></i> 1000cc</p>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-beli w-50 me-2">
+                                <i class="bi bi-cart-check"></i> Beli
+                            </button>
+                            <button class="btn btn-outline-danger btn-wishlist w-50" onclick="tambahKeWishlist('Honda CBR1000RR', 'Rp 650.000.000')">
+                                <i class="bi bi-heart"></i> Wishlist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motor 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 motor-card">
+                    <img src="assets/KAWASAKI_NINJA_ZX10R.jpg" class="card-img-top" alt="Kawasaki Ninja ZX-10R"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Kawasaki Ninja ZX-10R</h5>
+                        <p class="card-text harga-text">Harga: Rp 580.000.000</p>
+                        <p class="card-text stok-text">Stok: 4</p>
+                        <p class="card-text"><i class="bi bi-calendar"></i> Tahun: 2023 | <i class="bi bi-cpu"></i> 998cc</p>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-beli w-50 me-2">
+                                <i class="bi bi-cart-check"></i> Beli
+                            </button>
+                            <button class="btn btn-outline-danger btn-wishlist w-50" onclick="tambahKeWishlist('Kawasaki Ninja ZX-10R', 'Rp 580.000.000')">
+                                <i class="bi bi-heart"></i> Wishlist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motor 4 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 motor-card">
+                    <img src="assets/SUZUKI_GSXR1000.jpg" class="card-img-top" alt="Suzuki GSX-R1000"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Suzuki GSX-R1000</h5>
+                        <p class="card-text harga-text">Harga: Rp 520.000.000</p>
+                        <p class="card-text stok-text">Stok: 5</p>
+                        <p class="card-text"><i class="bi bi-calendar"></i> Tahun: 2023 | <i class="bi bi-cpu"></i> 999cc</p>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-beli w-50 me-2">
+                                <i class="bi bi-cart-check"></i> Beli
+                            </button>
+                            <button class="btn btn-outline-danger btn-wishlist w-50" onclick="tambahKeWishlist('Suzuki GSX-R1000', 'Rp 520.000.000')">
+                                <i class="bi bi-heart"></i> Wishlist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motor 5 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 motor-card">
+                    <img src="assets/DUCATI_PANIGALE_V4.jpg" class="card-img-top" alt="Ducati Panigale V4"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Ducati Panigale V4</h5>
+                        <p class="card-text harga-text">Harga: Rp 850.000.000</p>
+                        <p class="card-text stok-text">Stok: 1</p>
+                        <p class="card-text"><i class="bi bi-calendar"></i> Tahun: 2024 | <i class="bi bi-cpu"></i> 1103cc</p>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-beli w-50 me-2">
+                                <i class="bi bi-cart-check"></i> Beli
+                            </button>
+                            <button class="btn btn-outline-danger btn-wishlist w-50" onclick="tambahKeWishlist('Ducati Panigale V4', 'Rp 850.000.000')">
+                                <i class="bi bi-heart"></i> Wishlist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motor 6 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 motor-card">
+                    <img src="assets/BMW_S1000RR.jpg" class="card-img-top" alt="BMW S1000RR"/>
+                    <div class="card-body">
+                        <h5 class="card-title">BMW S1000RR</h5>
+                        <p class="card-text harga-text">Harga: Rp 780.000.000</p>
+                        <p class="card-text stok-text">Stok: 2</p>
+                        <p class="card-text"><i class="bi bi-calendar"></i> Tahun: 2024 | <i class="bi bi-cpu"></i> 999cc</p>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-beli w-50 me-2">
+                                <i class="bi bi-cart-check"></i> Beli
+                            </button>
+                            <button class="btn btn-outline-danger btn-wishlist w-50" onclick="tambahKeWishlist('BMW S1000RR', 'Rp 780.000.000')">
+                                <i class="bi bi-heart"></i> Wishlist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Tambah Motor -->
+    <div class="container mt-5 mb-5">
+        <div class="card p-4">
+            <h5 class="card-title mb-4"><i class="bi bi-plus-circle"></i> Tambah Data Motor Sport</h5>
+            <form id="formTambahMotor">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nama Motor</label>
+                        <input type="text" class="form-control" id="namaMotor" placeholder="Contoh: Yamaha R6">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Merk</label>
+                        <select class="form-select" id="merkMotor">
+                            <option value="">Pilih Merk</option>
+                            <option value="Yamaha">Yamaha</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Kawasaki">Kawasaki</option>
+                            <option value="Suzuki">Suzuki</option>
+                            <option value="Ducati">Ducati</option>
+                            <option value="BMW">BMW</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Tahun</label>
+                        <input type="number" class="form-control" id="tahunMotor" placeholder="2024" min="2015" max="2024">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">CC Motor</label>
+                        <select class="form-select" id="ccMotor">
+                            <option value="">Pilih CC</option>
+                            <option value="250">250cc</option>
+                            <option value="400">400cc</option>
+                            <option value="600">600cc</option>
+                            <option value="1000">1000cc</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Harga (Rp)</label>
+                        <input type="number" class="form-control" id="hargaMotor" placeholder="Masukkan harga">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Stok Unit</label>
+                        <input type="number" class="form-control" id="stokMotor" placeholder="Jumlah unit">
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Spesifikasi</label>
+                        <textarea class="form-control" id="spesifikasiMotor" rows="3" placeholder="Masukkan spesifikasi motor..."></textarea>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary px-5" onclick="tambahMotorBaru()">
+                        <i class="bi bi-save"></i> Tambah Motor
+                    </button>
+                    <button type="reset" class="btn btn-secondary px-5 ms-2">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Wishlist -->
+    <div class="modal fade" id="wishlistModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-heart-fill text-danger"></i> Daftar Wishlist Saya</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group" id="daftar-wishlist">
+                        <!-- Wishlist items akan ditampilkan di sini -->
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="kosongkanWishlist()">
+                        <i class="bi bi-trash"></i> Kosongkan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p class="mb-0">
+            <i class="bi bi-speedometer2"></i> &copy; 2024 MOTORSPORT SHOWROOM. All rights reserved. 
+            <i class="bi bi-bicycle"></i>
+        </p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript (External) -->
+    <script src="js/script.js"></script>
+</body>
+</html>
