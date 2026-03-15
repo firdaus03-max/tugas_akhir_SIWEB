@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Cek status login dari session atau cookie
 $isLoggedIn = false;
 $username = '';
 
@@ -53,7 +52,7 @@ if (isset($_SESSION["user"])) {
                 </ul>
                 
                 <?php if ($isLoggedIn): ?>
-                    <!-- Tampilan jika sudah login -->
+
                     <span class="text-white me-3">
                         <i class="bi bi-person-circle"></i> Halo, <?php echo htmlspecialchars($username); ?>
                     </span>
@@ -61,7 +60,6 @@ if (isset($_SESSION["user"])) {
                         <i class="bi bi-box-arrow-right"></i> Logout
                     </a>
                 <?php else: ?>
-                    <!-- Tampilan jika belum login -->
                     <a href="login.php" class="btn btn-outline-warning btn-sm me-2">
                         <i class="bi bi-box-arrow-in-right"></i> Login
                     </a>
@@ -77,7 +75,6 @@ if (isset($_SESSION["user"])) {
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <div class="hero text-center text-white d-flex align-items-center justify-content-center">
         <div class="container">
             <h1><i class="bi bi-bicycle"></i> Sistem Manajemen Showroom Motor Sport</h1>
@@ -85,7 +82,6 @@ if (isset($_SESSION["user"])) {
         </div>
     </div>
 
-    <!-- Dashboard Stats -->
     <div class="container mt-5">
         <div class="row text-center">
             <div class="col-md-4">
